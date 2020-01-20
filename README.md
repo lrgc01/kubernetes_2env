@@ -42,7 +42,7 @@
 ```
   kubectl describe sa my-serviceAccount
 ```
-  - If the SA is created after the pod, the pod must be re-created.
+    - If the SA is created after the pod, the pod must be re-created.
 
 
 ## Multiple environments:
