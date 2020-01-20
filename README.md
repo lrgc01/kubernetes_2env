@@ -27,22 +27,22 @@
   - Revision limit of 5 to do rollouts (in 03-deployment.yaml file): 
     - revisionHistoryLimit: 5   # in YAML file
   - History command:
-```
+   ```
   kubectl rollout history deployments -n production # or staging
-```
+   ```
   - To rollback:
-```
+   ```
   kubectl rollout undo deployment/httpd -n production # --revision=8 (optional rev number)
-```
+   ```
   - When applying a configuration I prefer to use the "--record" flag in order to have the change-cause described.
 
 - IAM Controls
   - The cluster and its namespace should run with proper Service Account configured
   - The correct ARN should be annotated and should be listed in the "describe sa" command
-```
+   ```
   kubectl describe sa my-serviceAccount
-```
-    - If the SA is created after the pod, the pod must be re-created.
+   ```
+  - If the SA is created after the pod, the pod must be re-created.
 
 
 ## Multiple environments:
