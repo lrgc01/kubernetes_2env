@@ -11,8 +11,6 @@
   - Production and staging environments are separated in two different namespaces:
     - namespace: production
     - namespace: staging
-  - Files for production under "production" directory
-  - Files for staging under "staging" directory
 
 - Autoscale command (pay attention to the *-n* line option):
 ```
@@ -33,6 +31,19 @@
   kubectl rollout history deployments -n production # or staging
 ```
   - When applying a configuration I prefer to use the "--record" flag
+
+## Multiple environments:
+
+As stated above there are two directories, one for each namespace. A namespace named *production* 
+which deploys a whole environment related to production, its limits, services, and so on. And the
+*staging* namespace which is analogous.
+
+  - Files in each directory:
+    - 01-namespace.yaml - creates the namespace itself
+    - 02-resourceQuota.yaml - resources and their limits
+    - 03-deployment.yaml - deployment of two containers and their replicas
+    - 04-service.yaml - all services for each replicaset
+    - 05-hpa.yaml - horizontalPodAutoscale - to scale the pod using a file
 
 ## Scale based on network latency
 
