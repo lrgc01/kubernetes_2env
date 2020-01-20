@@ -13,10 +13,10 @@
     - namespace: staging
 
 - Autoscale command (pay attention to the *-n* line option):
-```
+   ```
   kubectl autoscale deployment httpd --min=1 --max=4 --cpu-percent=70 -n production
   kubectl get hpa -n production      # to watch production namespace
-```
+   ```
   - Or just take a look in production/05-hpa.yaml
     - spec:
       - maxReplicas: 3
