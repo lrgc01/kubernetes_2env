@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+  namespace: staging
+  annotations:
+    monitoring: "true"
+spec:
+  replicas: 1
+  strategy: {}
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: lrgc01/nginx-stretch_slim
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+          requests: 
+            memory: "128Mi"
+            cpu: "125m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd
+  labels:
+    app: httpd
+  namespace: staging
+  annotations:
+    monitoring: "true"
+spec:
+  replicas: 1
+  strategy: {}
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+      - image: lrgc01/apache2-stretch_slim
+        name: httpd
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+          requests: 
+            memory: "128Mi"
+            cpu: "125m"

@@ -1,0 +1,12 @@
+apiVersion: v1
+# using resourceQuota to limit all containers in the namespace - LimitRange would be to a container
+kind: ResourceQuota
+metadata:
+  name: mem-cpu-quota
+  namespace: staging
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
