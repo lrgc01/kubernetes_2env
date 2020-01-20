@@ -23,14 +23,27 @@
       - minReplicas: 1
       - targetCPUUtilizationPercentage: 70
 
-- The rolling history
+- Rolling
   - Revision limit of 5 to do rollouts (in 03-deployment.yaml file): 
     - revisionHistoryLimit: 5   # in YAML file
   - History command:
 ```
   kubectl rollout history deployments -n production # or staging
 ```
-  - When applying a configuration I prefer to use the "--record" flag
+  - To rollback:
+```
+  kubectl rollout undo deployment/httpd -n production # --revision=8 (optional rev number)
+```
+  - When applying a configuration I prefer to use the "--record" flag in order to have the change-cause described.
+
+- IAM Controls
+  - The cluster and its namespace should run with proper Service Account configured
+  - The correct ARN should be annotated and should be listed in the "describe sa" command
+```
+  kubectl describe sa my-serviceAccount
+```
+  - If the SA is created after the pod, the pod must be re-created.
+
 
 ## Multiple environments:
 
@@ -56,3 +69,5 @@ of _object metrics_. This is available in the *autoscaling/v2beta2* API version.
    - [https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/](https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/)
    - [https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/declarative-config/)
    - [https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#autoscaling-on-multiple-metrics-and-custom-metrics](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#autoscaling-on-multiple-metrics-and-custom-metrics)
+
+ - [https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html](https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html)
